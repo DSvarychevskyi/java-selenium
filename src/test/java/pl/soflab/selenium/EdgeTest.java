@@ -5,36 +5,35 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.edge.EdgeDriver;
-
 public class EdgeTest {
 
-    private static WebDriver driver;
+  private static WebDriver driver;
 
-    @BeforeAll
-    static void setUpAll() {
-        System.setProperty("webdriver.edge.driver", "src/test/resources/MicrosoftWebDriver.exe");
-    }
+  @BeforeAll
+  static void setUpAll() {
+    System.setProperty("webdriver.edge.driver", "src/test/resources/MicrosoftWebDriver.exe");
+  }
 
-    @BeforeEach
-    void setUpEach() {
-        System.out.println("Start Test");
-        driver = new EdgeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    }
+  @BeforeEach
+  void setUpEach() {
+    System.out.println("Start Test");
+    driver = new EdgeDriver();
+    driver.manage().window().maximize();
+    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+  }
 
-    @Test
-    void testExample() {
-        driver.get("http://google.com");
-    }
+  @Test
+  void testExample() {
+    driver.get("http://google.com");
+  }
 
-    @AfterEach
-    void setDownEach() {
-        driver.close();
-        System.out.println("End Test");
-    }
+  @AfterEach
+  void setDownEach() {
+    driver.close();
+    System.out.println("End Test");
+  }
 }
