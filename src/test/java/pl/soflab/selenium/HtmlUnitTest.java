@@ -5,29 +5,25 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import java.util.concurrent.TimeUnit;
 
-public class ChromeTest {
+public class HtmlUnitTest {
 
-    private static WebDriver driver;
-    private static ChromeOptions options;
+    private static HtmlUnitDriver driver;
 
     @BeforeAll
     static void setUpAll() {
-        options = new ChromeOptions();
-        options.setHeadless(true);
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
     }
 
     @BeforeEach
     void setUpEach() {
         System.out.println("Start Test");
-        driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver = new HtmlUnitDriver();
+        driver.setJavascriptEnabled(true);
     }
 
     @Test
