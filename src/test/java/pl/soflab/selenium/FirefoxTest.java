@@ -39,7 +39,7 @@ public class FirefoxTest {
 
   @AfterEach
   void setDownEach() {
-    driver.close();
+    driver.quit();
     System.out.println("End Test");
   }
 }
