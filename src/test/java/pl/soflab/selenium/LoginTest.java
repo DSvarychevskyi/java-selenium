@@ -34,7 +34,7 @@ public class LoginTest {
 
   @Test
   @DisplayName("Login to presta shop")
-  void loginTest() {
+  void loginTest() throws InterruptedException {
     driver.get("http://demo.prestashop.com");
     assertEquals("PrestaShop Demo", driver.getTitle());
     WebElement mainFrame = driver.findElement(By.id("framelive"));
@@ -44,8 +44,10 @@ public class LoginTest {
     emailInput.sendKeys("1001test@test.pl");
     WebElement passwordInput = driver.findElement(By.name("password"));
     passwordInput.sendKeys("test1234");
+    assertEquals("password", passwordInput.getAttribute("type"));
+    driver.findElement(By.xpath("//*[@id='login-form']/section/div[2]/div[1]/div/span/button")).click();
+    assertEquals("text", passwordInput.getAttribute("type"));
     passwordInput.submit();
-    // lub driver.findElement(By.id("submit-login")).click();
     assertEquals("Your account", driver.findElement(By.xpath("//section[contains(@id, 'main')]//h1")).getText());
   }
 
@@ -121,6 +123,30 @@ public class LoginTest {
     log.info(driver.getPageSource());
     assertEquals("Invalid format.",
         driver.findElement(By.xpath("//li[@class = 'alert alert-danger']")).getText());
+  }
+
+  @Test
+  @DisplayName("Login to presta shop")
+  void loginShowHidePasswordTest() throws InterruptedException {
+    driver.get("http://demo.prestashop.com");
+    assertEquals("PrestaShop Demo", driver.getTitle());
+    WebElement mainFrame = driver.findElement(By.id("framelive"));
+    driver.switchTo().frame(mainFrame);
+    driver.findElement(By.xpath("//span[contains(text(), 'Sign in')]")).click();
+    WebElement emailInput = driver.findElement(By.name("email"));
+    emailInput.sendKeys("1001test@test.pl");
+    WebElement passwordInput = driver.findElement(By.name("password"));
+    passwordInput.sendKeys("test1234");
+    assertEquals("password", passwordInput.getAttribute("type"));
+    WebElement showHideBtn = driver.findElement(By.xpath("//*[@id='login-form']/section/div[2]/div[1]/div/span/button"));
+    assertEquals("SHOW", showHideBtn.getText());
+    showHideBtn.click();
+    assertEquals("text", passwordInput.getAttribute("type"));
+    assertEquals("HIDE", showHideBtn.getText());
+    showHideBtn.click();
+    assertEquals("password", passwordInput.getAttribute("type"));
+    passwordInput.submit();
+    assertEquals("Your account", driver.findElement(By.xpath("//section[contains(@id, 'main')]//h1")).getText());
   }
 
   @AfterEach
