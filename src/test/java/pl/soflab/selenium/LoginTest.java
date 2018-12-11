@@ -1,156 +1,124 @@
 package pl.soflab.selenium;
 
 import org.apache.log4j.Logger;
-import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-
-import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import pl.soflab.selenium.pages.AccountPage;
+import pl.soflab.selenium.pages.LoginPage;
+import pl.soflab.selenium.pages.MainPage;
+import pl.soflab.selenium.pages.Page;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LoginTest {
+public class LoginTest extends FunctionalTest{
 
   static Logger log = Logger.getLogger(LoginTest.class);
-  private static WebDriver driver;
-  private static ChromeOptions options;
 
-  @BeforeAll
-  static void setUpAll() {
-    options = new ChromeOptions();
-    options.setHeadless(false);
-    System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-  }
 
-  @BeforeEach
-  void setUpEach() {
-    driver = new ChromeDriver(options);
-    driver.manage().window().maximize();
-    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-  }
+
 
   @Test
-  @DisplayName("Login to presta shop")
-  void loginTest() throws InterruptedException {
+  @DisplayName("Login to presta shop(pom)")
+  void pomLoginTest() throws InterruptedException {
+    Page page = new Page(driver);
+    MainPage mainPage = new MainPage(driver);
+    LoginPage loginPage = new LoginPage(driver);
+    AccountPage accountPage = new AccountPage(driver);
+
     driver.get("http://demo.prestashop.com");
     assertEquals("PrestaShop Demo", driver.getTitle());
-    WebElement mainFrame = driver.findElement(By.id("framelive"));
-    driver.switchTo().frame(mainFrame);
-    driver.findElement(By.xpath("//span[contains(text(), 'Sign in')]")).click();
-    WebElement emailInput = driver.findElement(By.name("email"));
-    emailInput.sendKeys("1001test@test.pl");
-    WebElement passwordInput = driver.findElement(By.name("password"));
-    passwordInput.sendKeys("test1234");
-    assertEquals("password", passwordInput.getAttribute("type"));
-    driver.findElement(By.xpath("//*[@id='login-form']/section/div[2]/div[1]/div/span/button")).click();
-    assertEquals("text", passwordInput.getAttribute("type"));
-    passwordInput.submit();
-    assertEquals("Your account", driver.findElement(By.xpath("//section[contains(@id, 'main')]//h1")).getText());
+    page.swichToMainFrame();
+    mainPage.gotoLoginPage();
+    loginPage.fillLoginForm("1001test@test.pl", "test1234");
+
+    assertEquals("Your account", accountPage.accountSectionHeader.getText());
   }
 
   @Test
   @DisplayName("Failed Login (wrong username) to presta shop")
   void failedLoginWrongUsernameTest() {
+    Page page = new Page(driver);
+    MainPage mainPage = new MainPage(driver);
+    LoginPage loginPage = new LoginPage(driver);
+
     driver.get("http://demo.prestashop.com");
     assertEquals("PrestaShop Demo", driver.getTitle());
-    WebElement mainFrame = driver.findElement(By.id("framelive"));
-    driver.switchTo().frame(mainFrame);
-    driver.findElement(By.xpath("//span[contains(text(), 'Sign in')]")).click();
-    WebElement emailInput = driver.findElement(By.name("email"));
-    emailInput.sendKeys("2002test@test.pl");
-    WebElement passwordInput = driver.findElement(By.name("password"));
-    passwordInput.sendKeys("test1234");
-    driver.findElement(By.id("submit-login")).click();
-    // lub passwordInput.submit();
-    assertEquals("Authentication failed.",
-        driver.findElement(By.xpath("//li[@class = 'alert alert-danger']")).getText());
+    page.swichToMainFrame();
+    mainPage.gotoLoginPage();
+    loginPage.fillLoginForm("2002test@test.pl", "test1234");
 
+    assertEquals("Authentication failed.", loginPage.alert.getText());
   }
 
   @Test
   @DisplayName("Failed Login (wrong password) to presta shop")
   void failedLoginWrongPasswordTest() {
+    Page page = new Page(driver);
+    MainPage mainPage = new MainPage(driver);
+    LoginPage loginPage = new LoginPage(driver);
+
     driver.get("http://demo.prestashop.com");
     assertEquals("PrestaShop Demo", driver.getTitle());
-    WebElement mainFrame = driver.findElement(By.id("framelive"));
-    driver.switchTo().frame(mainFrame);
-    driver.findElement(By.xpath("//span[contains(text(), 'Sign in')]")).click();
-    WebElement emailInput = driver.findElement(By.name("email"));
-    emailInput.sendKeys("1001test@test.pl");
-    WebElement passwordInput = driver.findElement(By.name("password"));
-    passwordInput.sendKeys("test1111");
-    driver.findElement(By.id("submit-login")).click();
-    // lub passwordInput.submit();
-    assertEquals("Authentication failed.",
-        driver.findElement(By.xpath("//li[@class = 'alert alert-danger']")).getText());
+    page.swichToMainFrame();
+    mainPage.gotoLoginPage();
+    loginPage.fillLoginForm("1001test@test.pl", "test1111");
 
+    assertEquals("Authentication failed.", loginPage.alert.getText());
   }
 
   @Test
   @DisplayName("Failed Login (short password) to presta shop")
   void tryLoginWithShortPasswordTest() {
+    Page page = new Page(driver);
+    MainPage mainPage = new MainPage(driver);
+    LoginPage loginPage = new LoginPage(driver);
+
     driver.get("http://demo.prestashop.com");
     assertEquals("PrestaShop Demo", driver.getTitle());
-    WebElement mainFrame = driver.findElement(By.id("framelive"));
-    driver.switchTo().frame(mainFrame);
-    driver.findElement(By.xpath("//span[contains(text(), 'Sign in')]")).click();
-    WebElement emailInput = driver.findElement(By.name("email"));
-    emailInput.sendKeys("1001test@test.pl");
-    WebElement passwordInput = driver.findElement(By.name("password"));
-    passwordInput.sendKeys("test");
-    passwordInput.submit();
-    log.info(driver.getPageSource());
-    assertEquals("Invalid format.",
-        driver.findElement(By.xpath("//li[@class = 'alert alert-danger']")).getText());
+    page.swichToMainFrame();
+    mainPage.gotoLoginPage();
+    loginPage.fillLoginForm("2002test@test.pl", "test");
+
+    assertEquals("Invalid format.", loginPage.alert.getText());
   }
 
   @Test
   @DisplayName("Failed Login (invalid email format) to presta shop")
   void tryLoginWithiInvalidEmailFormatTest() {
+    Page page = new Page(driver);
+    MainPage mainPage = new MainPage(driver);
+    LoginPage loginPage = new LoginPage(driver);
+
     driver.get("http://demo.prestashop.com");
     assertEquals("PrestaShop Demo", driver.getTitle());
-    WebElement mainFrame = driver.findElement(By.id("framelive"));
-    driver.switchTo().frame(mainFrame);
-    driver.findElement(By.xpath("//span[contains(text(), 'Sign in')]")).click();
-    WebElement emailInput = driver.findElement(By.name("email"));
-    emailInput.sendKeys("1001test");
-    WebElement passwordInput = driver.findElement(By.name("password"));
-    passwordInput.sendKeys("test1234");
-    passwordInput.submit();
-    log.info(driver.getPageSource());
-    assertEquals("Invalid format.",
-        driver.findElement(By.xpath("//li[@class = 'alert alert-danger']")).getText());
+    page.swichToMainFrame();
+    mainPage.gotoLoginPage();
+    loginPage.fillLoginForm("2002test", "test1234");
+
+    assertEquals("Invalid format.", loginPage.alert.getText());
   }
 
   @Test
   @DisplayName("Login to presta shop")
   void loginShowHidePasswordTest() throws InterruptedException {
+    Page page = new Page(driver);
+    MainPage mainPage = new MainPage(driver);
+    LoginPage loginPage = new LoginPage(driver);
+    AccountPage accountPage = new AccountPage(driver);
+
     driver.get("http://demo.prestashop.com");
     assertEquals("PrestaShop Demo", driver.getTitle());
-    WebElement mainFrame = driver.findElement(By.id("framelive"));
-    driver.switchTo().frame(mainFrame);
-    driver.findElement(By.xpath("//span[contains(text(), 'Sign in')]")).click();
-    WebElement emailInput = driver.findElement(By.name("email"));
-    emailInput.sendKeys("1001test@test.pl");
-    WebElement passwordInput = driver.findElement(By.name("password"));
-    passwordInput.sendKeys("test1234");
-    assertEquals("password", passwordInput.getAttribute("type"));
-    WebElement showHideBtn = driver.findElement(By.xpath("//*[@id='login-form']/section/div[2]/div[1]/div/span/button"));
-    assertEquals("SHOW", showHideBtn.getText());
-    showHideBtn.click();
-    assertEquals("text", passwordInput.getAttribute("type"));
-    assertEquals("HIDE", showHideBtn.getText());
-    showHideBtn.click();
-    assertEquals("password", passwordInput.getAttribute("type"));
-    passwordInput.submit();
-    assertEquals("Your account", driver.findElement(By.xpath("//section[contains(@id, 'main')]//h1")).getText());
+    page.swichToMainFrame();
+    mainPage.gotoLoginPage();
+    loginPage.fillLoginForm("2002test", "test1234");
+    assertEquals("password", loginPage.passwordInput.getAttribute("type"));
+    assertEquals("SHOW", loginPage.showHideBtn.getText());
+    loginPage.showHideBtn.click();
+    assertEquals("text", loginPage.passwordInput.getAttribute("type"));
+    assertEquals("HIDE", loginPage.showHideBtn.getText());
+    loginPage.submitBtn.click();
+
+    assertEquals("Your account", accountPage.accountSectionHeader.getText());
   }
 
-  @AfterEach
-  void setDownEach() {
-    driver.quit();
-  }
 }
