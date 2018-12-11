@@ -14,11 +14,8 @@ public class LoginTest extends FunctionalTest{
 
   static Logger log = Logger.getLogger(LoginTest.class);
 
-
-
-
   @Test
-  @DisplayName("Login to presta shop(pom)")
+  @DisplayName("Login to presta shop")
   void pomLoginTest() throws InterruptedException {
     Page page = new Page(driver);
     MainPage mainPage = new MainPage(driver);
@@ -67,22 +64,6 @@ public class LoginTest extends FunctionalTest{
   }
 
   @Test
-  @DisplayName("Failed Login (short password) to presta shop")
-  void tryLoginWithShortPasswordTest() {
-    Page page = new Page(driver);
-    MainPage mainPage = new MainPage(driver);
-    LoginPage loginPage = new LoginPage(driver);
-
-    driver.get("http://demo.prestashop.com");
-    assertEquals("PrestaShop Demo", driver.getTitle());
-    page.swichToMainFrame();
-    mainPage.gotoLoginPage();
-    loginPage.fillLoginForm("2002test@test.pl", "test");
-
-    assertEquals("Invalid format.", loginPage.alert.getText());
-  }
-
-  @Test
   @DisplayName("Failed Login (invalid email format) to presta shop")
   void tryLoginWithiInvalidEmailFormatTest() {
     Page page = new Page(driver);
@@ -95,11 +76,31 @@ public class LoginTest extends FunctionalTest{
     mainPage.gotoLoginPage();
     loginPage.fillLoginForm("2002test", "test1234");
 
-    assertEquals("Invalid format.", loginPage.alert.getText());
+//    assertEquals("Invalid format.", loginPage.alert.getText());
+    assertEquals("Please include an '@' in the email address. '2002test' is missing an '@'.",
+        loginPage.emailInput.getAttribute("validationMessage"));
   }
 
   @Test
-  @DisplayName("Login to presta shop")
+  @DisplayName("Failed Login (short password) to presta shop")
+  void tryLoginWithShortPasswordTest() {
+    Page page = new Page(driver);
+    MainPage mainPage = new MainPage(driver);
+    LoginPage loginPage = new LoginPage(driver);
+
+    driver.get("http://demo.prestashop.com");
+    assertEquals("PrestaShop Demo", driver.getTitle());
+    page.swichToMainFrame();
+    mainPage.gotoLoginPage();
+    loginPage.fillLoginForm("2002test@test.pl", "test");
+
+//    assertEquals("Invalid format.", loginPage.alert.getText());
+    assertEquals("Please match the format requested.",
+        loginPage.passwordInput.getAttribute("validationMessage"));
+  }
+
+  @Test
+  @DisplayName("Show/Hide password and login to presta shop")
   void loginShowHidePasswordTest() throws InterruptedException {
     Page page = new Page(driver);
     MainPage mainPage = new MainPage(driver);
@@ -110,7 +111,8 @@ public class LoginTest extends FunctionalTest{
     assertEquals("PrestaShop Demo", driver.getTitle());
     page.swichToMainFrame();
     mainPage.gotoLoginPage();
-    loginPage.fillLoginForm("2002test", "test1234");
+    loginPage.emailInput.sendKeys("1001test@test.pl");
+    loginPage.passwordInput.sendKeys("test1234");
     assertEquals("password", loginPage.passwordInput.getAttribute("type"));
     assertEquals("SHOW", loginPage.showHideBtn.getText());
     loginPage.showHideBtn.click();
