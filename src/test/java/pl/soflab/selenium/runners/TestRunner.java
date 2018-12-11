@@ -7,12 +7,11 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-    features = "classpath:features/first.features",
+    features = {"classpath:features/Login.features"},
     glue = "pl.soflab.selenium.steps",
     strict = true,
     plugin = {"html:target/cukes", "pretty"},
-    tags = {"@firstTest", "not @out_of_scope"},
-    snippets = SnippetType.CAMELCASE
+    tags = {"@stage", "not @out_of_scope"}
 )
 public class TestRunner {
 }

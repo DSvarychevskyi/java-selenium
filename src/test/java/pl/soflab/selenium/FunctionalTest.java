@@ -17,7 +17,7 @@ public class FunctionalTest {
   @BeforeAll
   static void setUpAll() {
     options = new ChromeOptions();
-    options.setHeadless(true);
+    options.setHeadless(false);
     System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
   }
 

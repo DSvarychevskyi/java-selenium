@@ -1,0 +1,23 @@
+@stage
+Feature: Login To Presta shop
+
+  Background: Prepare browser
+    Given open chrome browser
+
+  Scenario: Succesful login
+    Given open http://demo.prestashop.com page
+    When click LOGIN button
+    Then we should see login form
+    When enter 1001test@test.pl into email field
+    And enter test1234 into password field
+    And click SIGN_IN button
+    Then we should see Your account message
+
+  Scenario: Failed login wrong email
+    Given open http://demo.prestashop.com page
+    When click LOGIN button
+    Then we should see login form
+    When enter 2002test@test.pl into email field
+    And enter test1234 into password field
+    And click SIGN_IN button
+    Then we should see Authentication failed. error alert

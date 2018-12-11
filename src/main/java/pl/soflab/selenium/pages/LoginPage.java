@@ -6,6 +6,9 @@ import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends PageObject {
 
+  @FindBy(xpath = "//*[@id='main']/header/h1")
+  public WebElement loginFormHeader;
+
   @FindBy(name = "email")
   public WebElement emailInput;
 

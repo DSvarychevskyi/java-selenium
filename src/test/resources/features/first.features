@@ -1,8 +1,0 @@
-@firstTest
-Feature: My first feature
-
-  Scenario: first scenario
-    Given open page
-    When input text
-    And click button
-    Then we should see result
