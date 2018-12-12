@@ -15,6 +15,7 @@ import pl.soflab.selenium.pages.AccountPage;
 import pl.soflab.selenium.pages.LoginPage;
 import pl.soflab.selenium.pages.MainPage;
 import pl.soflab.selenium.pages.Page;
+import pl.soflab.selenium.utils.DriverInitializer;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,12 +32,9 @@ public class MyStepdefs {
   LoginPage loginPage;
   AccountPage accountPage;
 
-  @Given("open chrome browser")
-  public void openChromeBrowser() {
-    options = new ChromeOptions();
-    options.setHeadless(false);
-    System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-    driver = new ChromeDriver(options);
+  @Given("prepare browser")
+  public void openChromeBrowser(String browser) {
+    driver = DriverInitializer.getInstance();//new ChromeDriver(options);
     driver.manage().window().maximize();
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 

@@ -28,9 +28,4 @@ public class LoginPage extends PageObject {
     super(driver);
   }
 
-  public void fillLoginForm(String email, String password) {
-    emailInput.sendKeys(email);
-    passwordInput.sendKeys(password);
-    submitBtn.click();
-  }
 }
