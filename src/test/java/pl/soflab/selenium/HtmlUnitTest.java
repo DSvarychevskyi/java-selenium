@@ -1,9 +1,6 @@
 package pl.soflab.selenium;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -23,6 +20,7 @@ public class HtmlUnitTest {
   }
 
   @Test
+  @Tag("htmlunit")
   void testExample() {
     driver.get("https://www.wikipedia.org");
     WebElement searchInput = driver.findElement(By.id("searchInput"));

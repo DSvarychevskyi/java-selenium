@@ -1,10 +1,7 @@
 package pl.soflab.selenium;
 
 import org.apache.log4j.Logger;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -36,6 +33,7 @@ public class FirefoxTest {
   }
 
   @Test
+  @Tag("firefox")
   void testExample() {
     driver.get("https://www.wikipedia.org");
     driver.findElement(By.id("searchInput"));

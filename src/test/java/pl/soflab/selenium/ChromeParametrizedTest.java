@@ -2,6 +2,8 @@ package pl.soflab.selenium;
 
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,9 +11,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.concurrent.TimeUnit;
 
-public class ChromeTest {
+public class ChromeParametrizedTest {
 
-  static Logger log = Logger.getLogger(ChromeTest.class);
+  static Logger log = Logger.getLogger(ChromeParametrizedTest.class);
   private static WebDriver driver;
   private static ChromeOptions options;
 
@@ -30,12 +32,13 @@ public class ChromeTest {
     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
   }
 
-  @Test
-  @Tag("chrome")
-  void testExample() {
+  @Tag("parametrized")
+  @ParameterizedTest(name = "Run #{index} with [{arguments}]")
+  @ValueSource(strings = { "Selenium", "JUnit5" })
+  void testExample(String param) {
     driver.get("https://www.wikipedia.org");
     driver.findElement(By.id("searchInput"));
-    driver.findElement(By.id("searchInput")).sendKeys("Selenium");
+    driver.findElement(By.id("searchInput")).sendKeys(param);
     driver.findElement(By.id("searchInput")).submit();
   }
 
