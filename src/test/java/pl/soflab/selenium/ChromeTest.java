@@ -5,6 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -34,7 +35,10 @@ public class ChromeTest {
 
   @Test
   void testExample() {
-    driver.get("http://google.com");
+    driver.get("https://www.wikipedia.org");
+    driver.findElement(By.id("searchInput"));
+    driver.findElement(By.id("searchInput")).sendKeys("Selenium");
+    driver.findElement(By.id("searchInput")).submit();
   }
 
   @AfterEach

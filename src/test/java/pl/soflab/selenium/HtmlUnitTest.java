@@ -4,6 +4,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class HtmlUnitTest {
@@ -18,12 +20,14 @@ public class HtmlUnitTest {
   void setUpEach() {
     System.out.println("Start Test");
     driver = new HtmlUnitDriver();
-    driver.setJavascriptEnabled(true);
   }
 
   @Test
   void testExample() {
-    driver.get("http://google.com");
+    driver.get("https://www.wikipedia.org");
+    WebElement searchInput = driver.findElement(By.id("searchInput"));
+    searchInput.sendKeys("Selenium");
+    searchInput.submit();
   }
 
   @AfterEach
