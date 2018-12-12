@@ -102,7 +102,6 @@ public class LoginTest {
     WebElement passwordInput = driver.findElement(By.name("password"));
     passwordInput.sendKeys("test");
     passwordInput.submit();
-    log.info(driver.getPageSource());
     assertEquals("Invalid format.",
         driver.findElement(By.xpath("//li[@class = 'alert alert-danger']")).getText());
   }
@@ -120,7 +119,6 @@ public class LoginTest {
     WebElement passwordInput = driver.findElement(By.name("password"));
     passwordInput.sendKeys("test1234");
     passwordInput.submit();
-    log.info(driver.getPageSource());
     assertEquals("Invalid format.",
         driver.findElement(By.xpath("//li[@class = 'alert alert-danger']")).getText());
   }
