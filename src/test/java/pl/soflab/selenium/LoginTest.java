@@ -21,7 +21,7 @@ public class LoginTest {
   @BeforeAll
   static void setUpAll() {
     options = new ChromeOptions();
-    options.setHeadless(false);
+    options.setHeadless(true);
     System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
   }
 
@@ -44,9 +44,6 @@ public class LoginTest {
     emailInput.sendKeys("1001test@test.pl");
     WebElement passwordInput = driver.findElement(By.name("password"));
     passwordInput.sendKeys("test1234");
-    assertEquals("password", passwordInput.getAttribute("type"));
-    driver.findElement(By.xpath("//*[@id='login-form']/section/div[2]/div[1]/div/span/button")).click();
-    assertEquals("text", passwordInput.getAttribute("type"));
     passwordInput.submit();
     assertEquals("Your account", driver.findElement(By.xpath("//section[contains(@id, 'main')]//h1")).getText());
   }
