@@ -7,10 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ChromeTest {
 
@@ -29,16 +33,18 @@ public class ChromeTest {
   void setUpEach() {
     log.info("Start Test");
     driver = new ChromeDriver(options);
-    driver.manage().window().maximize();
-    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    WebDriver.Options manage = driver.manage();
+    manage.window().maximize();
+    manage.timeouts().implicitlyWait(10, TimeUnit.SECONDS);
   }
 
   @Test
   void testExample() {
     driver.get("https://www.wikipedia.org");
-    driver.findElement(By.id("searchInput"));
-    driver.findElement(By.id("searchInput")).sendKeys("Selenium");
-    driver.findElement(By.id("searchInput")).submit();
+    WebElement searchInput = driver.findElement(By.id("searchInput"));
+    searchInput.sendKeys("Selenium");
+    searchInput.submit();
+    assertEquals("Selenium - Wikipedia", driver.getTitle());
   }
 
   @AfterEach
