@@ -3,6 +3,7 @@ package pl.soflab.selenium;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -37,17 +38,18 @@ public class SearchTest {
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
   }
 
-  @Test
   @DisplayName("Wyszukaj produkt i sprawdź rezultat")
-  void searchTest() {
+  @ParameterizedTest(name = "Run #{index} with [{arguments}]")
+  @CsvFileSource(resources = "/file.csv", numLinesToSkip = 1)
+  void searchTest(String searchText, int amount) {
     driver.get("http://demo.prestashop.com");
     assertEquals("PrestaShop Demo", driver.getTitle());
     WebElement mainFrame = driver.findElement(By.id("framelive"));
     driver.switchTo().frame(mainFrame);
     WebElement search = driver.findElement(By.name("s"));
-    search.sendKeys("t-shirt");
+    search.sendKeys(searchText);
     search.submit();
-    assertTrue(driver.findElements(By.xpath("//div//article")).size() > 0);
+    assertTrue(driver.findElements(By.xpath("//div//article")).size() >= amount);
   }
 
   @Test

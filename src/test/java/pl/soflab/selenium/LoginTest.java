@@ -21,7 +21,7 @@ public class LoginTest {
   @BeforeAll
   static void setUpAll() {
     options = new ChromeOptions();
-    options.setHeadless(true);
+    options.setHeadless(false);
     System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
   }
 
@@ -30,6 +30,40 @@ public class LoginTest {
     driver = new ChromeDriver(options);
     driver.manage().window().maximize();
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+  }
+  private StringBuffer verificationErrors = new StringBuffer();
+  @Test
+  public void testLoginTest2Case() throws Exception {
+    driver.get("http://demo.prestashop.com/en/?view=front");
+    // ERROR: Caught exception [ERROR: Unsupported command [selectFrame | index=0 | ]]
+    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)=''])[1]/following::span[1]")).click();
+    driver.findElement(By.name("email")).click();
+    driver.findElement(By.name("email")).clear();
+    driver.findElement(By.name("email")).sendKeys("1001test@test.pl");
+    driver.findElement(By.name("password")).clear();
+    driver.findElement(By.name("password")).sendKeys("test1234");
+    driver.findElement(By.id("submit-login")).click();
+    try {
+      assertEquals("Your account", driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Home'])[1]/following::h1[1]")).getText());
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+  }
+  @Test
+  public void testLoginTestCase() throws Exception {
+    driver.get("http://demo.prestashop.com/en/?view=front");
+    // ERROR: Caught exception [ERROR: Unsupported command [selectFrame | index=0 | ]]
+    driver.switchTo().frame(driver.findElement(By.id("framelive")));
+    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)=''])[1]/following::span[1]")).click();
+    driver.findElement(By.name("email")).click();
+    driver.findElement(By.name("email")).clear();
+    driver.findElement(By.name("email")).sendKeys("1001test@test.pl");
+    driver.findElement(By.name("password")).clear();
+    driver.findElement(By.name("password")).sendKeys("test1234");
+    driver.findElement(By.id("submit-login")).click();
+
+    assertEquals("Your account", driver.findElement(By.xpath("//*[@id='main']//h1")).getText());
+//*[@id="main"]/header/h1
   }
 
   @Test
@@ -146,6 +180,6 @@ public class LoginTest {
 
   @AfterEach
   void setDownEach() {
-    driver.quit();
+//    driver.quit();
   }
 }
