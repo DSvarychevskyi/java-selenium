@@ -17,10 +17,6 @@ public class POMLoginTest extends FunctionalTest{
   @Test
   @DisplayName("Login to presta shop")
   void pomLoginTest() throws InterruptedException {
-    Page page = new Page(driver);
-    MainPage mainPage = new MainPage(driver);
-    LoginPage loginPage = new LoginPage(driver);
-    AccountPage accountPage = new AccountPage(driver);
 
     driver.get("http://demo.prestashop.com");
     assertEquals("PrestaShop Demo", driver.getTitle());
@@ -34,9 +30,9 @@ public class POMLoginTest extends FunctionalTest{
   @Test
   @DisplayName("Failed Login (wrong username) to presta shop")
   void failedLoginWrongUsernameTest() {
-    Page page = new Page(driver);
-    MainPage mainPage = new MainPage(driver);
-    LoginPage loginPage = new LoginPage(driver);
+//    Page page = new Page(driver);
+//    MainPage mainPage = new MainPage(driver);
+//    LoginPage loginPage = new LoginPage(driver);
 
     driver.get("http://demo.prestashop.com");
     assertEquals("PrestaShop Demo", driver.getTitle());
