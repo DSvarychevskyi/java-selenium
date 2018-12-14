@@ -1,10 +1,6 @@
 package pl.soflab.selenium;
 
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
