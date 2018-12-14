@@ -10,9 +10,9 @@ import pl.soflab.selenium.pages.Page;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LoginTest extends FunctionalTest{
+public class POMLoginTest extends FunctionalTest{
 
-  static Logger log = Logger.getLogger(LoginTest.class);
+  static Logger log = Logger.getLogger(POMLoginTest.class);
 
   @Test
   @DisplayName("Login to presta shop")
