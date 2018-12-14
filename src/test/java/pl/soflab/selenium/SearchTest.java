@@ -38,7 +38,7 @@ public class SearchTest {
   }
 
   @Test
-  @DisplayName("Rejestracja nowego użytkownika")
+  @DisplayName("Wyszukaj produkt i sprawdź rezultat")
   void searchTest() {
     driver.get("http://demo.prestashop.com");
     assertEquals("PrestaShop Demo", driver.getTitle());
@@ -51,7 +51,7 @@ public class SearchTest {
   }
 
   @Test
-  @DisplayName("Rejestracja nowego użytkownika")
+  @DisplayName("Wyszukaj produkt i wejdź do niego")
   void serchAndEnterTest() {
     driver.get("http://demo.prestashop.com");
     assertEquals("PrestaShop Demo", driver.getTitle());
