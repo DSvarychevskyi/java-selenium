@@ -9,6 +9,9 @@ public class MainPage extends PageObject{
   @FindBy(xpath = "//span[contains(text(), 'Sign in')]")
   WebElement loginLink;
 
+  @FindBy(xpath = "//*[@id='_desktop_user_info']//a[2]")
+  public WebElement loggedUserLink;
+
   public MainPage(WebDriver driver) {
     super(driver);
   }

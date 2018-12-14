@@ -21,6 +21,9 @@ public class LoginPage extends PageObject {
   @FindBy(xpath = "//*[@id='login-form']/section/div[2]/div[1]/div/span/button")
   public WebElement showHideBtn;
 
+  @FindBy(xpath = "//*[@id='content']/div/a")
+  public WebElement registrationLink;
+
   public LoginPage(WebDriver driver) {
     super(driver);
   }
@@ -29,5 +32,9 @@ public class LoginPage extends PageObject {
     emailInput.sendKeys(email);
     passwordInput.sendKeys(password);
     submitBtn.click();
+  }
+
+  public void gotoRegistrationPage() {
+    registrationLink.click();
   }
 }
