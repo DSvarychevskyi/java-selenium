@@ -3,6 +3,9 @@ package pl.soflab.selenium;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class POMRegistrationTest extends FunctionalTest {
@@ -15,7 +18,7 @@ public class POMRegistrationTest extends FunctionalTest {
     loginPage.gotoRegistrationPage();
     assertEquals("Create an account", registrationPage.header.getText());
     registrationPage.fillinFormAndSave(0, "Name", "Lastname", generateEmail()+"@wp.pl",
-        "test123", "01/01/1990", true, true);
+        "test123", getDate(), true, true);
     assertEquals("Name Lastname", mainPage.loggedUserLink.getText());
   }
 

@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import pl.soflab.selenium.pages.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class FunctionalTest {
@@ -53,5 +55,10 @@ public class FunctionalTest {
       builder.append(ALPHA_NUMERIC_STRING.charAt(character));
     }
     return builder.toString();
+  }
+
+  public String getDate(){
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    return simpleDateFormat.format(new Date());
   }
 }
